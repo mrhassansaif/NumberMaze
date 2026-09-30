@@ -1,8 +1,12 @@
-# React + Vite
+# Number Maze
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A number memory challenge/game built with React and Vite.
 
-Currently, two official plugins are available:
+Remember the number shown, then re-type it before it fades. Each level adds more digits.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Scripts
+
+- `npm run dev` — start the development server
+- `npm run build` — build for production
+- `npm run preview` — preview the production build
+- `npm run lint` — run ESLint

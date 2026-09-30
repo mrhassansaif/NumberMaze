@@ -1,25 +1,8 @@
-import "./MemoryGame.css";
-import React, { useState, useEffect, useRef } from "react";
-// import "./MemGame.css";
+import { useState, useEffect, useRef } from "react";
+import "./MemGame.css";
+// Alternate hooks-based Number Maze implementation (not used by App)
 
 const GenNumber = ({ level, wrong, question }) => {
-  const [preContent, setPreContent] = useState(`
-    -----------------------------------------------------
-
-      ██╗        ██╗    ██╗  
-     ██╔╝       ██╔╝    ╚██╗ 
-    ██╔╝       ██╔╝      ╚██╗
-    ╚██╗      ██╔╝       ██╔╝
-     ╚██╗    ██╔╝       ██╔╝ 
-      ╚═╝    ╚═╝        ╚═╝  
-                              
-    Greetings developers, Shall we play a game?
-
-    Re-type the number you see below. Ez right?
-
-    -----------------------------------------------------
-  `);
-
   const numberRef = useRef(null);
 
   useEffect(() => {
@@ -27,21 +10,47 @@ const GenNumber = ({ level, wrong, question }) => {
     digit = level.main + 2;
     time = 100 * Math.min(digit, 5) + 400 * Math.max(digit - 5, 0);
 
-    setTimeout(() => {
-      setPreContent((prevContent) => prevContent.replace(/\w/gi, "&#183;"));
+    const number = numberRef.current;
+    if (!number) return undefined;
+
+    const timer = setTimeout(() => {
+      number.innerHTML = number.innerHTML.replace(/\w/gi, "&#183;");
     }, time);
-  }, [level.main]);
+
+    return () => clearTimeout(timer);
+  }, [level.main, question]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setPreContent((prevContent) => prevContent.replace(/\w|\W/gi, "&#183;"));
+    const number = numberRef.current;
+    if (!number) return undefined;
+
+    const timer = setTimeout(() => {
+      number.innerHTML = number.innerHTML.replace(/\w|\W/gi, "&#183;");
     }, 1200);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="app__gen-number">
-      <div className="content">
-        <pre dangerouslySetInnerHTML={{ __html: preContent }} />
+      <div className="content intro">
+        <div className="intro__maze" aria-hidden="true">
+          <span className="intro__node">3</span>
+          <span className="intro__wire" />
+          <span className="intro__node intro__node--ghost">?</span>
+          <span className="intro__wire" />
+          <span className="intro__node intro__node--pulse">7</span>
+          <span className="intro__wire" />
+          <span className="intro__node">1</span>
+          <span className="intro__wire intro__wire--bend" />
+          <span className="intro__node intro__node--goal">◆</span>
+        </div>
+        <p className="intro__greet">
+          Greetings developers, Shall we play a game?
+        </p>
+        <p className="intro__hint">
+          Re-type the number you see below. Ez right?
+        </p>
       </div>
       <div className="app__info">
         <p className="app__level">
